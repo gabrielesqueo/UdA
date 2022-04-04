@@ -7,7 +7,8 @@ CREATE TABLE Proprietari (
     Cognome varchar(30) not null,
     Nome varchar(30) not null,
     Telefono int not null,
-    Email varchar(30) not null
+    Email varchar(30) not null,
+    Password varchar(30) not null
 
 )ENGINE=InnoDb;
 
@@ -32,13 +33,9 @@ CREATE TABLE Appartamenti (
 )ENGINE=InnoDb;
 
 CREATE TABLE Clienti (
-    Username_Cliente Integer not null AUTO_INCREMENT primary key,
+    Username_Cliente varchar(30) not null primary key,
     Cognome varchar(30) not null,
-    Nome varchar(30) not null,
-    Nome_via varchar(30) not null,
-    Civico Integer not null,
-    id_comunecli Integer not null,
-    FOREIGN KEY (id_comunecli) REFERENCES Comuni(Id_Comune),
+    Nome varchar(30) not null,  
     Telefono int not null,
     Email varchar(30) not null,
     Password varchar(30) not null,
@@ -55,10 +52,10 @@ CREATE TABLE Affitta (
     Check_out Date
 )ENGINE=InnoDb;
 
-INSERT INTO Proprietari (Cognome, Nome, Telefono, Email )
+INSERT INTO Proprietari (Cognome, Nome, Telefono, Email, Password )
 VALUES 
-('Loizzi', 'Francesco', 3882530041, 'loizzifrancesco@gmail.com'),
-('Cuscito', 'Michele', 3894545803, 'miki.cuscito@gmail.com');
+('Loizzi', 'Francesco', 3882530041, 'loizzifrancesco@gmail.com',"Password1"),
+('Cuscito', 'Michele', 3894545803, 'miki.cuscito@gmail.com',"Bari123");
 
 INSERT INTO Comuni (CAP, Comune, Provincia, Nazione ) VALUES 
 (70010, 'Valenzano', 'Bari', 'Italia'),
@@ -70,11 +67,11 @@ INSERT INTO Appartamenti (Nome_via, Civico, id_comuneapp, Prezzo, Descrizione, i
 ('Via De Frutti', 177, 3, 45, '1 piano 100 mq 2 vani',2),
 ('Via Chiancaro',150, 1, 40, '4 piani 300 mq 5 vani',1);
 
-INSERT INTO Clienti (Username_Cliente, Cognome, Nome, Nome_via, Civico, id_comunecli, Telefono, Email, Password, Num_Creditcard) VALUES
-('Gabber', 'Squeo', 'Gabriele', 'Stradella Cannaruto', 1, 2, 3913940500, 'gsqueo3@gmail.com', 'Sacchetti', '1234567890123456'),
-('Yeahpigeon', 'Petralla', 'Valerio', 'Via Orazio Comes', 5, 2, 3342738828, 'yeahpigeon@gmail.com', 'Mario32', '8741378612783613'),
-('Nicolanonproprioetero','Menolascina', 'Nicolandrea', 'Circolo Tennis', 3, 1, 3891741827, 'menolascinandrea@gmail.com', 'Tamporra', '4632749672674823' ),
-('GambleNonIntelligente','Gabriele','Amoruso','Via delle scimmie',4,3,3339466891,'gabrieleamoruso@gmail.com','banana1','7813426741637841');
+INSERT INTO Clienti (Username_Cliente, Cognome, Nome, Telefono, Email, Password, Num_Creditcard) VALUES
+('Gabber', 'Squeo', 'Gabriele', 3913940500, 'gsqueo3@gmail.com', 'Sacchetti', '1234567890123456'),
+('Yeahpigeon', 'Petralla', 'Valerio',  3342738828, 'yeahpigeon@gmail.com', 'Mario32', '8741378612783613'),
+('Nicolanonproprioetero','Menolascina',  3891741827, 'menolascinandrea@gmail.com', 'Tamporra', '4632749672674823' ),
+('GambleNonIntelligente','Gabriele','Amoruso' ,3339466891,'gabrieleamoruso@gmail.com','banana1','7813426741637841');
 
 INSERT INTO Affitta (id_appartamento,username_cliente,Check_in,Check_out) VALUES
 (1,2,2008-11-10, 2008-12-10),
