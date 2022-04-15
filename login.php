@@ -19,7 +19,7 @@
                     class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form >
+                    <form action="login.php" method="POST">
                     <!-- Email input -->
                         <div class="form-outline mb-4">
                             <input type="text" id="form3Example3" class="form-control form-control-lg"
@@ -53,7 +53,7 @@
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <a href="homepage.html" style="padding-right:5%">Homepage</a>
-                            <button  type= submit class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                            <button  type= "submit" name="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                             <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="regaffittuario.html"
                                 class="link-danger">Registrati</a></p>
                         </div>
@@ -89,7 +89,20 @@
     </section>
     <!--JS-->
     <?php
-     
+        if (isset($_POST["submit"])) {
+            $servername = "localhost";
+            $username = "root";
+
+
+            // Create connection
+            $conn = mysqli_connect($servername, $username, "");
+
+            // Check connection
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            echo "Connected successfully";
+        }
     ?>
 </body>
 </html>
