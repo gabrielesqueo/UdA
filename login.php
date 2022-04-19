@@ -22,14 +22,14 @@
                     <form action="login.php" method="POST">
                     <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="text" id="form3Example3" class="form-control form-control-lg"
-                            placeholder="Inserisci un nome utente valido" />
-                            <label class="form-label" for="form3Example3">Nome Utente</label>
+                            <input type="text" name="idUtente" class="form-control form-control-lg"
+                            placeholder="Inserisci un Id utente valido" />
+                            <label class="form-label" for="form3Example3">Id Utente</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="form3Example4" class="form-control form-control-lg"
+                            <input type="text" name="password" class="form-control form-control-lg"
                             placeholder="Inserisci la password" />
                             <label class="form-label" for="form3Example4">Password</label>
                         </div>
@@ -43,18 +43,13 @@
                             </label>
                             
                             </div>
-                            <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="radio"  name="tipo" />
-                            <label class="form-check-label" for="form2Example3">
-                                Sono un Affittuario
-                            </label>
-                            </div>
+                            
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <a href="homepage.html" style="padding-right:5%">Homepage</a>
                             <button  type= "submit" name="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="regaffittuario.html"
+                            <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="regaffittuario.php"
                                 class="link-danger">Registrati</a></p>
                         </div>
 
@@ -65,43 +60,56 @@
         <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
             <!-- Copyright -->
             <div class="text-white mb-3 mb-md-0">
-            <img src="./images/Logo.png" alt=""  height="20px" class="d-inline-block align-text-top"> </img>
+            <img src="./images/Logo.png" alt=""  height="25px" class="d-inline-block align-text-top"> </img>
             </div>
             <!-- Copyright -->
 
-            <!-- Right -->
-            <div>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="#!" class="text-white">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            </div>
-            <!-- Right -->
         </div>
     </section>
     <!--JS-->
     <?php
+    error_reporting(0);
         if (isset($_POST["submit"])) {
             $servername = "localhost";
             $username = "root";
 
 
             // Create connection
-            $conn = mysqli_connect($servername, $username, "");
+            $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
 
             // Check connection
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
-            echo "Connected successfully";
+            if (isset($_POST["tipo"]))
+            {
+                $sql = "SELECT Id_Proprietario, Password FROM proprietari WHERE '".$_POST['idUtente']."'= Id_Proprietario AND '".$_POST['password']."'= Password";
+                $result = mysqli_query($conn, $sql);
+                echo $sql;
+
+                if (mysqli_num_rows($result) > 0) {
+                    $redirect = "homevenditore.php?".$_POST['idUtente'];
+                    echo "<script>window.location.href='$redirect';</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Id o Password sbagliati');</script>";
+                }
+                
+            }
+            else
+            {
+                $sql = "SELECT Id_Cliente, Password FROM clienti WHERE '".$_POST['idUtente']."'= Id_Cliente AND '".$_POST['password']."'= Password";
+                $result = mysqli_query($conn, $sql);
+                echo $sql;
+
+                if (mysqli_num_rows($result) > 0) {
+                    $redirect = "homeutente.php?".$_POST['idUtente'];
+                    echo "<script>window.location.href='$redirect';</script>";
+                    exit;
+                } else {
+                    echo "<script type='text/javascript'>alert('Id o Password sbagliati');</script>";
+                }
+            }
+            mysqli_close($conn);
         }
     ?>
 </body>
