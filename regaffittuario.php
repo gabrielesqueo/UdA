@@ -81,9 +81,18 @@
             {   
                 $sql = "INSERT INTO `clienti`(`Cognome`, `Nome`, `Telefono`, `Email`, `Password`, `Num_Creditcard`) 
                 VALUES ('".$_POST['cognome']."', '".$_POST['nome']."', '".$_POST['numero']."','".$_POST['email']."','".$_POST['password']."','".$_POST['numerocarta']."')";
-                
+                //INSERIRE QUALI DATI DI OUTPUT
                 if (mysqli_query($conn, $sql)) {
-                    echo "<script type='text/javascript'>alert('Creazione account avvenuta con successo');</script>";
+                    $sql = "SELECT Id_Cliente, Email, Password FROM clienti WHERE '".$_POST['email']."'= Email AND '".$_POST['password']."'= Password";
+                    $result = mysqli_query($conn, $sql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                            echo "raggiunto";
+                            echo "<script type='text/javascript'>alert('Creazione avvenuta con successo! Il suo Id è: ".$row['Id_Cliente']."');</script>";
+                        }                    
+                        
+                    }
                 } else {
                     echo "<script type='text/javascript'>alert('Errore generico durante la registrazione! Riprovare');</script>";
                 }

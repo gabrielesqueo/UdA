@@ -79,7 +79,16 @@
                 VALUES ('".$_POST['cognome']."', '".$_POST['nome']."', '".$_POST['numero']."','".$_POST['email']."','".$_POST['password']."')";
                 
                 if (mysqli_query($conn, $sql)) {
-                    echo "<script type='text/javascript'>alert('Creazione account avvenuta con successo');</script>";
+                    $sql = "SELECT Id_Proprietario, Email, Password FROM proprietari WHERE '".$_POST['email']."'= Email AND '".$_POST['password']."'= Password";
+                    $result = mysqli_query($conn, $sql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                            echo "raggiunto";
+                            echo "<script type='text/javascript'>alert('Creazione avvenuta con successo! Il suo Id è: ".$row['Id_Proprietario']."');</script>";
+                        }                    
+                        
+                    }
                 } else {
                     echo "<script type='text/javascript'>alert('Errore generico durante la registrazione! Riprovare');</script>";
                 }
