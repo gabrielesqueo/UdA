@@ -14,28 +14,24 @@
         <!--Navbar-->
         <nav class="navbar navbar-dark bg-custom-2 sticky-top" >
             <div class="container-fluid" >
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="homepage.html">
                 <img src="./images/Logo.png" alt=""  height="50px" class="d-inline-block align-text-top"> </img>
             </a>
             <div class="d-flex " style="padding-bottom:10px">
-                <a class="navbar-brand" href="login.php" >
+                <a class="navbar-brand" href="homepage.html" >
                     <button class="cta" >
-                    <a>
-                        <span class="hover-underline-animation" href="homepage.html">Home</span>
-                     </a>
-                    </button>
-                    <button class="cta" >
-                    <a>
-                        <span class="hover-underline-animation" href="prenota.phps">Prenota</span>
-                     </a>
+                        <span class="hover-underline-animation"> Home </span>
                     </button>
                 </a>
-                </div>
+                <a class="navbar-brand" href="prenota.php" >
+                    <button class="cta" >
+                        <span class="hover-underline-animation"> Prenota </span>
+                    </button>
+                </a>
             </div>
         </nav>
         <!--Body-->
-        <img src="./images/Hero-img.jpg" width=100% style="position: absolute"> 
-            <span style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%); font-size: 20vw;color:white; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">Benvenuto</span> 
-        </img>
+        <div>
+        </div>
     </body>
 </html>

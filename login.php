@@ -85,7 +85,6 @@
             {
                 $sql = "SELECT Id_Proprietario, Password FROM proprietari WHERE '".$_POST['idUtente']."'= Id_Proprietario AND '".$_POST['password']."'= Password";
                 $result = mysqli_query($conn, $sql);
-                echo $sql;
 
                 if (mysqli_num_rows($result) > 0) {
                     $redirect = "homevenditore.php?".$_POST['idUtente'];
@@ -99,10 +98,9 @@
             {
                 $sql = "SELECT Id_Cliente, Password FROM clienti WHERE '".$_POST['idUtente']."'= Id_Cliente AND '".$_POST['password']."'= Password";
                 $result = mysqli_query($conn, $sql);
-                echo $sql;
 
                 if (mysqli_num_rows($result) > 0) {
-                    $redirect = "homeutente.php?".$_POST['idUtente'];
+                    $redirect = "homeutente.php?id=".$_POST['idUtente'];
                     echo "<script>window.location.href='$redirect';</script>";
                     exit;
                 } else {
