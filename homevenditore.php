@@ -35,33 +35,40 @@
         <!--Body-->
         <div>
             <?php
-            error_reporting(0);
-            $servername = "localhost";
-            $username = "root";
+                error_reporting(0);
+                $servername = "localhost";
+                $username = "root";
 
 
-            // Create connection
-            $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
+                // Create connection
+                $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
 
-            // Check connection
-            if (!$conn) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
+                // Check connection
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
                 $id = $_GET["id"];
+                
                 $sql = "SELECT appartamenti.Nome_via, appartamenti.Civico, appartamenti.Prezzo, appartamenti.Descrizione FROM appartamenti, proprietari WHERE  proprietari.id_proprietario = $id AND proprietari.id_proprietario = appartamenti.id_proprietario";
                 $result = mysqli_query($conn, $sql);
                 
                 if (mysqli_num_rows($result) > 0) {
-                    echo "<div class='table-wrapper'><table class='fl-table'><thead> <tr> <th>Indirizzo /th> <th>Civico </th> <th>Prezzo</th> <th>Descrizione </th> </tr> </thead>";
+                    echo "<div class='table-wrapper'><table class='fl-table'><thead> <tr><th colspan=4>Appartamenti in Affitto</th></tr><tr> <th>Indirizzo </th> <th>Civico </th> <th>Prezzo</th> <th>Descrizione </th> </tr> </thead>";
                     while($row = mysqli_fetch_assoc($result)) {
                         echo "<tr><th>". $row["Nome_via"]. "</th><th> " . $row["Civico"]."</th><th>". $row["Prezzo"]. "</th><th>".$row["Descrizione"]."</th></tr>";
                       } 
-                    echo "</table></div>";
+                    echo "</table></div><button class='cssbuttons-io-button' onclick='redirect()' style='margin-top: 30px;margin-left:35%'>Metti In Affitto Un Altra Proprietà! <div class='icon'><svg height='24' width='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'></path><path d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='currentColor'></path></svg> </button>";
                 } else {
-                    echo "<button class='cssbuttons-io-button' style='margin-top: 30px;margin-left:35%'>Metti In Affitto La Tua Prima Proprietà! <div class='icon'><svg height='24' width='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'></path><path d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='currentColor'></path></svg> </button>";
+                    echo "<button class='cssbuttons-io-button' href='affitta.php' style='margin-top: 30px;margin-left:35%'>Metti In Affitto La Tua Prima Proprietà! <div class='icon'><svg height='24' width='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'></path><path d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='currentColor'></path></svg> </button>";
                 }
+                mysqli_close($conn);
                 
             ?>
+            <script>
+                function redirect() {
+                    window.location.href="affitta.php";
+                }
+            </script>
         </div>
     </body>
 </html>

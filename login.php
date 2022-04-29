@@ -87,7 +87,7 @@
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
-                    $redirect = "homevenditore.php?".$_POST['idUtente'];
+                    $redirect = "homevenditore.php?id=".$_POST['idUtente'];
                     echo "<script>window.location.href='$redirect';</script>";
                 } else {
                     echo "<script type='text/javascript'>alert('Id o Password sbagliati');</script>";
