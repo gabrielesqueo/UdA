@@ -66,21 +66,21 @@
 
         </div>
     </section>
-    <!--JS-->
+    <!--PHP-->
     <?php
     error_reporting(0);
         if (isset($_POST["submit"])) {
             $servername = "localhost";
             $username = "root";
-
-
+    
             // Create connection
             $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
-
+    
             // Check connection
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
+    
             if (isset($_POST["tipo"]))
             {
                 $sql = "SELECT Id_Proprietario, Password FROM proprietari WHERE '".$_POST['idUtente']."'= Id_Proprietario AND '".$_POST['password']."'= Password";
