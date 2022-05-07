@@ -69,7 +69,7 @@
                                     <label class="form-label" for="numero">Prezzo</label>
                                     
                                     <input type="text" name="descrizione" class="form-control form-control-lg"
-                                    placeholder="Inserisci il numero della carta" />
+                                    placeholder="Inserisci la descrizione della casa" />
                                     <label class="form-label" for="descrizione">Descrizione</label>
                                 </div>
 

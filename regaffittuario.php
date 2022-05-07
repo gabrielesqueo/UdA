@@ -88,7 +88,6 @@
                     
                     if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)) {
-                            echo "raggiunto";
                             echo "<script type='text/javascript'>alert('Creazione avvenuta con successo! Il suo Id è: ".$row['Id_Cliente']."');</script>";
                         }                    
                         
