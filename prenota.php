@@ -33,7 +33,7 @@
         </nav>
         <!--Body-->
         <div>
-            <section class="vh-90">
+            <section class="vh-90" >
                 <div class="container-fluid h-custom">
                     <div class="row d-flex justify-content-center align-items-center h-100">
                         <div class="col-md-9 col-lg-6 col-xl-5">
@@ -44,7 +44,7 @@
                             <form action="prenota.php?id=<?php echo $_GET["id"] ?>" method="POST"> 
 
                                 <div class="form-outline mb-4">
-                                    <select name="appartanento" id="appartanento" class="form-control form-control-lg">
+                                    <select name="appartamento" id="appartamento" class="form-control form-control-lg">
                                     <option>Scegli appartamento</option>
                                     <?php
                                         $servername = "localhost";
@@ -58,28 +58,25 @@
                                         if (!$conn) {
                                             die("Connection failed: " . mysqli_connect_error());
                                         }
-                                        $sql = "SELECT appartamenti.Id_Appartamento, appartamenti.descrizione FROM appartementi"
-                                        if (mysqli_query($conn, $sql)) {
+                                        $sql = "SELECT appartamenti.Id_Appartamento, appartamenti.descrizione, Prezzo FROM appartamenti";
+                                        if ($result = mysqli_query($conn, $sql)) {
                                             if (mysqli_num_rows($result) > 0) {
                                                 while($row = mysqli_fetch_assoc($result)) {
-                                                    echo "<option value=".$row["Id.Appartamento"].">".$row["descrizione"]."</option>";
-                                                  } 
+                                                    echo "<option value=".$row["Id_Appartamento"].">".$row["descrizione"]."  Costo: ".$row["Prezzo"]."€</option>";
+                                                } 
                                                 
                                             }
                                         }
                                     ?>
-                                    <option value="1">Valenzano</option>
-                                    <option value="2">Bari</option>
-                                    <option value="3">Sora</option>
                                 </select>
-                                    <label class="form-label" for="appartanento">Seleziona l'appartamento</label>
+                                    <label class="form-label" for="appartamento">Seleziona l'appartamento</label>
                                 
                                     <input type="date" name="datainizio" class="form-control form-control-lg"
-                                    placeholder="Inserisci il numero" />
+                                    placeholder="Data di Inizio prenotazione" />
                                     <label class="form-label" for="datainizio">Data di Inizio prenotazione</label>
                                     
-                                    <input type="text" name="datafine" class="form-control form-control-lg"
-                                    placeholder="Inserisci il numero della carta" />
+                                    <input type="date" name="datafine" class="form-control form-control-lg"
+                                    placeholder="Data di fine prenotazione" />
                                     <label class="form-label" for="datafine">Data di fine prenotazione</label>
                                 </div>
 
@@ -94,7 +91,6 @@
                 </div>
             </section>
             <?php
-            //FINIRE
                 error_reporting(0);
                 if(isset($_POST["submit"])) {
                     $servername = "localhost";
@@ -108,17 +104,24 @@
                     if (!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
-                    if (isset($_POST["nome"]) && isset($_POST["civico"])  && isset($_POST["comune"]) && isset($_POST["numero"]) && isset($_POST["descrizione"]))
+                    if (isset($_POST["appartamento"]) && isset($_POST["datainizio"])  && isset($_POST["datafine"]))
                     {   
-                        $sql = "INSERT INTO `appartamenti`(`Nome_via`, `Civico`, `id_comuneapp`, `Prezzo`, `Descrizione`, `id_proprietario`) 
-                        VALUES ('".$_POST['nome']."', ".$_POST['civico'].", ".$_POST['comune'].", ".$_POST['numero'].",'".$_POST['descrizione']."',".$_GET["id"].")";
-                        //INSERIRE QUALI DATI DI OUTPUT
-                        if (mysqli_query($conn, $sql)) {
-                            echo "<script type='text/javascript'>alert('Appartamento aggiunto con successo!');</script>";
-                        
+                        $mysqldatainizio = date ('Y-m-d', strtotime($_POST["datainizio"]));
+                        $mysqldatafine = date ('Y-m-d', strtotime($_POST["datafine"]));
+                        $sql = "INSERT INTO `affitta`(`id_appartamento`, `id_cliente`, `Check_in`, `Check_out`) 
+                        VALUES (".$_POST['appartamento'].", ".$_GET['id'].", '".$mysqldatainizio."', '".$mysqldatafine."')";
+                        echo $sql;
+                        if ($_POST['datainizio'] >= $_POST['datafine']) {
+                            echo "<script type='text/javascript'>alert('La data di fine prenotazione è uguale o viene prima della data di inizio!');</script>";
                         } else {
-                            echo "<script type='text/javascript'>alert('Errore generico durante la registrazione! Riprovare');</script>";
+                            if (mysqli_query($conn, $sql)) {
+                                echo "<script type='text/javascript'>alert('Prenotazione avvenuta con successo!');</script>";
+                            
+                            } else {
+                                echo "<script type='text/javascript'>alert('Errore generico durante la prenotazione! Riprovare');</script>";
+                            }
                         }
+                        
 
                     }
                     else
