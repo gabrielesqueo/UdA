@@ -33,7 +33,101 @@
         </nav>
         <!--Body-->
         <div>
+            <section class="vh-90">
+                <div class="container-fluid h-custom">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-md-9 col-lg-6 col-xl-5">
+                            <img src="./images/LoginImage.jpg"
+                            class="img-fluid" alt="Sample image">
+                        </div>
+                        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                            <form action="prenota.php?id=<?php echo $_GET["id"] ?>" method="POST"> 
 
+                                <div class="form-outline mb-4">
+                                    <select name="appartanento" id="appartanento" class="form-control form-control-lg">
+                                    <option>Scegli appartamento</option>
+                                    <?php
+                                        $servername = "localhost";
+                                        $username = "root";
+                    
+                    
+                                        // Create connection
+                                        $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
+
+                                        // Check connection
+                                        if (!$conn) {
+                                            die("Connection failed: " . mysqli_connect_error());
+                                        }
+                                        $sql = "SELECT appartamenti.Id_Appartamento, appartamenti.descrizione FROM appartementi"
+                                        if (mysqli_query($conn, $sql)) {
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<option value=".$row["Id.Appartamento"].">".$row["descrizione"]."</option>";
+                                                  } 
+                                                
+                                            }
+                                        }
+                                    ?>
+                                    <option value="1">Valenzano</option>
+                                    <option value="2">Bari</option>
+                                    <option value="3">Sora</option>
+                                </select>
+                                    <label class="form-label" for="appartanento">Seleziona l'appartamento</label>
+                                
+                                    <input type="date" name="datainizio" class="form-control form-control-lg"
+                                    placeholder="Inserisci il numero" />
+                                    <label class="form-label" for="datainizio">Data di Inizio prenotazione</label>
+                                    
+                                    <input type="text" name="datafine" class="form-control form-control-lg"
+                                    placeholder="Inserisci il numero della carta" />
+                                    <label class="form-label" for="datafine">Data di fine prenotazione</label>
+                                </div>
+
+                                <div class="text-center text-lg-start mt-4 pt-2">
+                                    <a href="homepage.html" style="padding-right:5%;  color:red;">Homepage</a>
+                                    <button  class="btn btn-primary btn-lg" type= submit name= "submit" style="padding-left: 2.5rem; padding-right: 2.5rem;" >Prenota</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <?php
+            //FINIRE
+                error_reporting(0);
+                if(isset($_POST["submit"])) {
+                    $servername = "localhost";
+                    $username = "root";
+
+
+                    // Create connection
+                    $conn = mysqli_connect($servername, $username, "", "bedandbreakfast");
+
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    if (isset($_POST["nome"]) && isset($_POST["civico"])  && isset($_POST["comune"]) && isset($_POST["numero"]) && isset($_POST["descrizione"]))
+                    {   
+                        $sql = "INSERT INTO `appartamenti`(`Nome_via`, `Civico`, `id_comuneapp`, `Prezzo`, `Descrizione`, `id_proprietario`) 
+                        VALUES ('".$_POST['nome']."', ".$_POST['civico'].", ".$_POST['comune'].", ".$_POST['numero'].",'".$_POST['descrizione']."',".$_GET["id"].")";
+                        //INSERIRE QUALI DATI DI OUTPUT
+                        if (mysqli_query($conn, $sql)) {
+                            echo "<script type='text/javascript'>alert('Appartamento aggiunto con successo!');</script>";
+                        
+                        } else {
+                            echo "<script type='text/javascript'>alert('Errore generico durante la registrazione! Riprovare');</script>";
+                        }
+
+                    }
+                    else
+                    {
+                        echo "<script type='text/javascript'>alert('Non hai compilato uno dei campi');</script>";
+                    }
+                    mysqli_close($conn);
+                }
+            ?>
         </div>
     </body>
 </html>
