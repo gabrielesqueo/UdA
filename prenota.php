@@ -110,7 +110,6 @@
                         $mysqldatafine = date ('Y-m-d', strtotime($_POST["datafine"]));
                         $sql = "INSERT INTO `affitta`(`id_appartamento`, `id_cliente`, `Check_in`, `Check_out`) 
                         VALUES (".$_POST['appartamento'].", ".$_GET['id'].", '".$mysqldatainizio."', '".$mysqldatafine."')";
-                        echo $sql;
                         if ($_POST['datainizio'] >= $_POST['datafine']) {
                             echo "<script type='text/javascript'>alert('La data di fine prenotazione è uguale o viene prima della data di inizio!');</script>";
                         } else {
